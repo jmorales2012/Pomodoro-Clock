@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#selectionContainer {
+  width: 100%;
+  text-align: center;
+  margin-top: 50px;
+}
+
+#selectionContainer > div {
+  border: 1px solid black;
+  display: inline-block;
+  width: 45%;
+}
+
+#timerContainer {
+  width: 100%;
+  text-align: center;
+  margin-top: 50px;
+}
+
