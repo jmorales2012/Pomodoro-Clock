@@ -6,28 +6,32 @@
 </head>
 <body>
 
-  <h1>Tomato Timer</h1>
+  <header>
+    <h1>Tomato Timer</h1>
+  </header>
 
-  <div>
-    <p>BREAK LENGTH</p>
-    <p>
-      <span>-</span>
-      <span>1</span>
-      <span>+</span>
-    </p>
-  </div>
-  <div>
-    <p>SESSION LENGTH</p>
-    <p>
-      <span>-</span>
-      <span>1</span>
-      <span>+</span>
-    </p>
+  <div id="selectionContainer">
+    <div>
+      <p>BREAK LENGTH</p>
+      <p>
+        <button id="breakSubtract">-</button>
+        <span id="breakTime">1</span>
+        <button id="breakAdd">+</button>
+      </p>
+    </div>
+    <div>
+      <p>SESSION LENGTH</p>
+      <p>
+        <button id="sessionSubtract">-</button>
+        <span id="sessionTime">1</span>
+        <button id="sessionAdd">+</button>
+      </p>
+    </div>
   </div>
 
-  <div>
-    <h1>WORK!</h1>
-    <h1>1:00</h1>
+  <div id="timerContainer">
+    <h2>WORK!</h2>
+    <h2>1:00</h2>
   </div>
 
 <script type="text/javascript" src="script.js"></script>
