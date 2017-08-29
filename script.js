@@ -8,11 +8,14 @@ var timerContainerDisplay = document.querySelector("#timerContainer");
 
 // set initial timer values
 var time;
+var timerOn;
+var breakOn;
+var seconds;
 var minutes;
-var timerOn = false;
-var breakOn = false;
-var seconds = 10/*60*/;
-var breakSeconds = 10/*Number(breakTimeDisplay.innerText) * 60*/;
+var breakSeconds;
+
+// initialize timer display
+reset();
 
 
 // add event handlers for timer buttons
@@ -39,7 +42,8 @@ buttons.forEach(function(btn) {
     if (btn.id === "sessionAdd" || btn.id === "sessionSubtract") {
       // set seconds, display timer
       seconds = time * 60;
-      timeLeftDisplay.innerText = time + "m 0s";
+      minutes = Math.floor(seconds / 60);
+      displayTime();
     }
 
     // =========================
@@ -49,6 +53,13 @@ buttons.forEach(function(btn) {
       timerTypeDisplay.innerText = "Work Time!";
       timerOn = !timerOn;
       toggleSessionTimer(timerOn, btn);
+    }
+
+    // ====================
+    // RESET BUTTON HANDLER
+    // ====================
+    if (btn.id === "reset") {
+      reset();
     }
   });
 });
@@ -61,33 +72,43 @@ function toggleSessionTimer(timerOn, btn) {
     var x = setInterval(function() {
       seconds -= 1;
       minutes = Math.floor(seconds / 60);
-      timeLeftDisplay.innerText = minutes + "m " + (seconds % 60) + "s";
+      displayTime();
 
+      // what to do when timer runs out
       if (seconds < 1) {
         breakOn = !breakOn;
-        if (!breakOn) {
-          clearInterval(x);
-          seconds = 10/*Number(sessionTimeDisplay.innerText) * 60*/;
-          timerTypeDisplay.innerText = "Work Time!";
-          toggleSessionTimer(timerOn, btn);
-        } 
-
-        else {
-          clearInterval(x);
-          seconds = 10/*Number(breakTimeDisplay.innerText) * 60*/;
-          timerTypeDisplay.innerText = "Play Time!";
-          toggleSessionTimer(timerOn, btn);
-        }
+        toggleBreakSession(x, btn);
       }
 
+      // start/stop button event listener
       btn.addEventListener("click", function() {
         timerOn = !timerOn;
         clearInterval(x);
       });
+
+      // reset button event listener
+      buttons[5].addEventListener("click", function() {
+        clearInterval(x);
+        reset();
+      })
     }, 1000);
   }
 }
 
+function toggleBreakSession(x, btn) {
+  var timerType = "";
+  if (!breakOn) {
+    seconds = Number(sessionTimeDisplay.innerText) * 60;
+    timerType = "Work Time!";
+  } else {
+    seconds = Number(breakTimeDisplay.innerText) * 60;
+    timerType = "Break Time!";
+  }
+
+  clearInterval(x);
+  timerTypeDisplay.innerText = timerType;
+  toggleSessionTimer(timerOn, btn);
+}
 
 function addTime(time) {
   return time += 1;
@@ -97,4 +118,22 @@ function subtractTime(time) {
   if (time > 1)
     return time -= 1;
   return time;
+}
+
+function displayTime() {
+  timeLeftDisplay.innerText = minutes + "m " + (seconds % 60) + "s";
+}
+
+function reset() {
+  timerOn = false;
+  breakOn = false;
+  timerTypeDisplay.innerText = "Ready to Start?";
+  timerContainerDisplay.classList.add("breakOn");
+  timerContainerDisplay.classList.remove("sessionOn");
+  breakTimeDisplay.innerText = 5;
+  sessionTimeDisplay.innerText = 20;
+  seconds = Number(sessionTimeDisplay.innerText) * 60;
+  minutes = Math.floor(seconds / 60);
+  breakSeconds = Number(breakTimeDisplay.innerText) * 60;
+  displayTime();
 }
