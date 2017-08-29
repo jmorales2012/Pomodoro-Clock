@@ -2,14 +2,17 @@
 var buttons = document.querySelectorAll("button");
 var timeLeftDisplay = document.querySelector("#timeLeft");
 var breakTimeDisplay = document.querySelector("#breakTime");
-var sessionTimeDisplay = document.querySelector("#sessionTime");
+var timerTypeDisplay = document.querySelector("#timerType");
+// var sessionTimeDisplay = document.querySelector("#sessionTime");
 
 // set initial timer values
 var time;
-var seconds;
 var minutes;
-var timeLeft;
+var timeLeft = 1;
 var timerOn = false;
+var breakOn = false;
+var seconds = timeLeft * 60;
+var breakSeconds = Number(breakTimeDisplay.innerText) * 60;
 
 
 
@@ -20,23 +23,24 @@ buttons.forEach(function(btn) {
     // TIMER BUTTONS HANDLERS
     // ======================
     if (btn.className === "addTime") {
-      // add button is always on right side, so get prev el text
+      // initialize time, increment, assign
       time = Number(btn.previousElementSibling.innerText);
       time = addTime(time);
       btn.previousElementSibling.innerText = time;
     }
 
     else if (btn.className === "subtractTime") {
-      // sub button is always on left side, so get next el text
+      // initialize time, decrement, assign
       time = Number(btn.nextElementSibling.innerText);
       time = subtractTime(time);
       btn.nextElementSibling.innerText = time;
     }
 
     if (btn.id === "sessionAdd" || btn.id === "sessionSubtract") {
+      // initialize timeLeft, get seconds, display timeLeft
       timeLeft = time;
       seconds = timeLeft * 60;
-      timeLeftDisplay.innerText = timeLeft + ":00";
+      timeLeftDisplay.innerText = timeLeft + "m 0s";
     }
 
     // =========================
@@ -44,21 +48,33 @@ buttons.forEach(function(btn) {
     // =========================
     if (btn.id === "start") {
       timerOn = !timerOn;
-      toggleTimer(timerOn, btn);
+      toggleSessionTimer(timerOn, btn, seconds);
     }
   });
 });
 
 
-function toggleTimer(timerOn, btn) {
-  console.log("timerOn: ", timerOn);
+function toggleSessionTimer(timerOn, btn, timerSeconds = timeLeft * 60) {
+  // timerTypeDisplay.innerText = "Work Time!";
   if (timerOn) {
     var x = setInterval(function() {
-      timeLeftDisplay.innerText = seconds + "s";
-      seconds -= 1;
+      timerSeconds -= 1;
+      minutes = Math.floor(timerSeconds / 60);
+      timeLeftDisplay.innerText = minutes + "m " + (timerSeconds % 60) + "s";
 
-      if (seconds < 0) {
-        clearInterval(x);
+      if (timerSeconds < 1) {
+        breakOn = !breakOn;
+        if (!breakOn) {
+          clearInterval(x);
+          timerTypeDisplay.innerText = "Work Time!";
+          toggleSessionTimer(timerOn, btn, breakSeconds);
+        } 
+
+        else {
+          clearInterval(x);
+          timerTypeDisplay.innerText = "Break Time!";
+          toggleSessionTimer(timerOn, btn, seconds);
+        }
       }
 
       btn.addEventListener("click", function() {
