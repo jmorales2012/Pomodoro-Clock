@@ -3,22 +3,22 @@ var buttons = document.querySelectorAll("button");
 var timeLeftDisplay = document.querySelector("#timeLeft");
 var breakTimeDisplay = document.querySelector("#breakTime");
 var timerTypeDisplay = document.querySelector("#timerType");
-// var sessionTimeDisplay = document.querySelector("#sessionTime");
+var sessionTimeDisplay = document.querySelector("#sessionTime");
 
 // set initial timer values
 var time;
 var minutes;
-var timeLeft = 1;
 var timerOn = false;
 var breakOn = false;
-var seconds = timeLeft * 60;
-var breakSeconds = Number(breakTimeDisplay.innerText) * 60;
+var seconds = 10/*60*/;
+var breakSeconds = 10/*Number(breakTimeDisplay.innerText) * 60*/;
 
 
 
 // add event handlers for timer buttons
 buttons.forEach(function(btn) {
   btn.addEventListener("click", function() {
+
     // ======================
     // TIMER BUTTONS HANDLERS
     // ======================
@@ -37,10 +37,9 @@ buttons.forEach(function(btn) {
     }
 
     if (btn.id === "sessionAdd" || btn.id === "sessionSubtract") {
-      // initialize timeLeft, get seconds, display timeLeft
-      timeLeft = time;
-      seconds = timeLeft * 60;
-      timeLeftDisplay.innerText = timeLeft + "m 0s";
+      // set seconds, display timer
+      seconds = time * 60;
+      timeLeftDisplay.innerText = time + "m 0s";
     }
 
     // =========================
@@ -48,32 +47,33 @@ buttons.forEach(function(btn) {
     // =========================
     if (btn.id === "start") {
       timerOn = !timerOn;
-      toggleSessionTimer(timerOn, btn, seconds);
+      toggleSessionTimer(timerOn, btn);
     }
   });
 });
 
 
-function toggleSessionTimer(timerOn, btn, timerSeconds = timeLeft * 60) {
-  // timerTypeDisplay.innerText = "Work Time!";
+function toggleSessionTimer(timerOn, btn) {
   if (timerOn) {
     var x = setInterval(function() {
-      timerSeconds -= 1;
-      minutes = Math.floor(timerSeconds / 60);
-      timeLeftDisplay.innerText = minutes + "m " + (timerSeconds % 60) + "s";
+      seconds -= 1;
+      minutes = Math.floor(seconds / 60);
+      timeLeftDisplay.innerText = minutes + "m " + (seconds % 60) + "s";
 
-      if (timerSeconds < 1) {
+      if (seconds < 1) {
         breakOn = !breakOn;
         if (!breakOn) {
           clearInterval(x);
+          seconds = 10/*Number(sessionTimeDisplay.innerText) * 60*/;
           timerTypeDisplay.innerText = "Work Time!";
-          toggleSessionTimer(timerOn, btn, breakSeconds);
+          toggleSessionTimer(timerOn, btn);
         } 
 
         else {
           clearInterval(x);
+          seconds = 10/*Number(breakTimeDisplay.innerText) * 60*/;
           timerTypeDisplay.innerText = "Break Time!";
-          toggleSessionTimer(timerOn, btn, seconds);
+          toggleSessionTimer(timerOn, btn);
         }
       }
 
