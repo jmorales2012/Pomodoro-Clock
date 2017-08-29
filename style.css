@@ -1,7 +1,15 @@
 * {
   margin: 0;
   padding: 0;
+  color: white;
   box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+  font-weight: 200;
+}
+
+body {
+  padding-top: 40px;
+  background: #333333;
 }
 
 header {
@@ -10,21 +18,71 @@ header {
   text-align: center;
 }
 
+h1 {
+  font-size: 44px;
+}
+
+p {
+  font-size: 14px;
+}
+
+button {
+  border: none;
+  font-size: 22px;
+  background: #333333;
+}
+
+button:focus {
+  outline: none;
+}
+
+span {
+  font-size: 22px;
+  padding: 0 5px 0 5px;
+}
+
 #selectionContainer {
   width: 100%;
+  margin-top: 20px;
   text-align: center;
-  margin-top: 50px;
 }
 
 #selectionContainer > div {
-  border: 1px solid black;
+  width: 20%;
+  height: 100px;
+  padding-top: 30px;
   display: inline-block;
-  width: 45%;
 }
 
 #timerContainer {
-  width: 100%;
+  width: 350px;
+  height: 350px;
+  margin: 0 auto;
+  padding-top: 70px;
   text-align: center;
-  margin-top: 50px;
+  border-radius: 50%;
 }
 
+.sessionOn {
+  border: 1px solid rgba(255, 0, 0, 0.8);
+}
+
+.breakOn {
+  border: 1px solid green;
+}
+
+#timerType, #timeLeft {
+  font-size: 30px;
+}
+
+#timeLeft {
+  padding: 30px;
+}
+
+#start {
+  font-size: 18px;
+  margin-top: 15px;
+  padding: 15px;
+  border: 1px solid #888;
+  border-radius: 15px;
+}

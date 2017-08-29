@@ -4,6 +4,7 @@ var timeLeftDisplay = document.querySelector("#timeLeft");
 var breakTimeDisplay = document.querySelector("#breakTime");
 var timerTypeDisplay = document.querySelector("#timerType");
 var sessionTimeDisplay = document.querySelector("#sessionTime");
+var timerContainerDisplay = document.querySelector("#timerContainer");
 
 // set initial timer values
 var time;
@@ -12,7 +13,6 @@ var timerOn = false;
 var breakOn = false;
 var seconds = 10/*60*/;
 var breakSeconds = 10/*Number(breakTimeDisplay.innerText) * 60*/;
-
 
 
 // add event handlers for timer buttons
@@ -46,6 +46,7 @@ buttons.forEach(function(btn) {
     // START/STOP BUTTON HANDLER
     // =========================
     if (btn.id === "start") {
+      timerTypeDisplay.innerText = "Work Time!";
       timerOn = !timerOn;
       toggleSessionTimer(timerOn, btn);
     }
@@ -55,6 +56,8 @@ buttons.forEach(function(btn) {
 
 function toggleSessionTimer(timerOn, btn) {
   if (timerOn) {
+    timerContainerDisplay.classList.toggle("sessionOn");
+    timerContainerDisplay.classList.toggle("breakOn");
     var x = setInterval(function() {
       seconds -= 1;
       minutes = Math.floor(seconds / 60);
@@ -72,7 +75,7 @@ function toggleSessionTimer(timerOn, btn) {
         else {
           clearInterval(x);
           seconds = 10/*Number(breakTimeDisplay.innerText) * 60*/;
-          timerTypeDisplay.innerText = "Break Time!";
+          timerTypeDisplay.innerText = "Play Time!";
           toggleSessionTimer(timerOn, btn);
         }
       }

@@ -3,6 +3,7 @@
 <head>
   <title>Tomato Timer - Pomodoro Clock</title>
   <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet">
 </head>
 <body>
 
@@ -13,24 +14,20 @@
   <div id="selectionContainer">
     <div>
       <p>BREAK LENGTH</p>
-      <p>
         <button class="subtractTime">-</button>
         <span id="breakTime">1</span>
         <button class="addTime">+</button>
-      </p>
     </div>
     <div>
       <p>SESSION LENGTH</p>
-      <p>
         <button id="sessionSubtract" class="subtractTime">-</button>
         <span id="sessionTime">1</span>
         <button id="sessionAdd" class="addTime">+</button>
-      </p>
     </div>
   </div>
 
-  <div id="timerContainer">
-    <h2 id="timerType">Work Time!</h2>
+  <div id="timerContainer" class="breakOn">
+    <h2 id="timerType">Ready to Start?</h2>
     <h2 id="timeLeft">1m 0s</h2>
     <button id="start">Click to Start/Stop</button>
   </div>
